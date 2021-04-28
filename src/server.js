@@ -1,15 +1,17 @@
 const express = require('express');
+const morgan = require('morgan');
 const server = express();
+const router = require('./routes/index')
 
-//           /!\
-// require("dotenv").config();
+server.use(morgan('dev'));
 
-server.use(express.urlencoded({extended: false}));
+require('dotenv').config();
 
 
-// server.use(router);
+server.use(express.urlencoded({ extended: false }));
 
+server.use(router);
 
 server.listen(process.env.PORT, () => {
-    console.log('Connexion !');
-})
+  console.log(`Server est lancé sur le port ${process.env.PORT}`);
+});
