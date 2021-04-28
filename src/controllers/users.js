@@ -13,6 +13,18 @@ exports.newUser=(request,response)=>{
       role:request.body.role
    }
    console.log(newUser)
+   userModel.chikingUser(newUser.email,(error,result)=>{
+      if(newUser=== null){
+response.status(400).json({
+   message: "you have to enter all the information"
+})
+      }else if(result.length !==0){
+         console.log(result.length)
+         response.status(409).json({
+            message:"Un utilisateur utilisant cette adress email est déjà enregistré"
+         })
+      }
+   
   
    
     userModel.AddUser(newUser,(error,result)=>{
@@ -29,8 +41,9 @@ exports.newUser=(request,response)=>{
          last_name:result.last_name,
          role:result.role
       })
-    }
-    )}
+    })
+   })
+}
 
    
 

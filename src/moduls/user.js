@@ -23,15 +23,15 @@ exports.AddUser = (newUser, Callback) => {
       Callback(null, result);
     })
   }
-//   chicking if the email and password exist
-//   exports.chikingUser=(userdata,Callback)=>{
-    // db.query(`SELECT * FROM user where email ="${userdata.email}" and password="${userdata.password}" ;`,(error,result)=>{
-        // if(error){
-            // console.log("error:", error)
-            // Callback(error,null)
-        // }
-        // console.log(result)
-        // Callback(null,result)
-    // })
-//   
-    // }
+// chicking if the email and password exist
+exports.chikingUser=(userdata,Callback)=>{
+    db.query(`SELECT * FROM user where email ="${userdata}"  ;`,(error,result)=>{
+        if(error){
+            console.log("error:", error)
+            Callback(error,null)
+        }
+        console.log(result)
+        Callback(null,result)
+    })
+  
+ }
