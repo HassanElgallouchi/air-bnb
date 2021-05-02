@@ -5,51 +5,72 @@ const body_parser =require("body-parser")
 
 // function pour ajouter user
 exports.newUser=(request,response)=>{
-   const newUser={
-      email:request.body.email ,
-      password:request.body.password,
-      first_name:request.body.first_name,
-      last_name:request.body.last_name,
-      role:request.body.role
+   const {
+      email ,
+      password,
+      first_name,
+      last_name,
+      role
+   }=request.body
+   // error if the frist name not have value
+   if(first_name.length==0){
+      response.status(400).json({
+         message:"le champ frist_name n'est pas rensenlgné"
+      })
    }
-   console.log(newUser)
-   userModel.chikingUser(newUser.email,(error,result)=>{
-      if(newUser=== null){
-response.status(400).json({
-   message: "you have to enter all the information"
-})
-      }else if(result.length !==0){
+   
+   else{
+// chiking if email is exist
+       
+   userModel.chikingUser(email,(error,result)=>{
+      if(result.length !==0){
          console.log(result.length)
          response.status(409).json({
             message:"Un utilisateur utilisant cette adress email est déjà enregistré"
          })
       }
-   
-  
-   
-    userModel.AddUser(newUser,(error,result)=>{
-   if(error){
-      response.status(500).json({
-         message:error
-      })
-   }
-          response.status(201).json({
-         message:"user add successfule",
-         email:result.email,
-         password:result.password,
-         first_name:result.first_name,
-         last_name:result.last_name,
-         role:result.role
-      })
-    })
+      
+      else{
+         // hashing the password
+         const saltRounds = 10;
+         bcrypt.hash(password,saltRounds,(error,hash)=>{
+           if(error){
+              response.status(500).json({
+                 message:error
+              })
+            }
+             const  newUser = {
+                  email ,
+                  password:hash,
+                  first_name,
+                  last_name,
+                  role
+             }
+         //   creat new user
+            userModel.AddUser(newUser,(error,result)=>{
+               if(error){
+                  response.status(500).json({
+                     message:error
+                  })
+               }
+                      response.status(201).json({
+                     message:"user add successfule",
+                     email:newUser.email,
+                     password:newUser.password,
+                     first_name:newUser.first_name,
+                     last_name:newUser.last_name,
+                     role:newUser.role
+                  })
+                })
+
+         })
+      }
    })
+   }
+  
 }
 
-   
-
-
-  
-// 
+// end of inscreption
 
 
 // login
