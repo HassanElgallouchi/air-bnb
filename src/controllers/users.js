@@ -136,11 +136,7 @@ exports.findUser=(request,response)=>{
            });
          });
        }
-      // response.status(201).jason({
-         // message:"login successfule",
-         // email:userdata.email,
-      //  password:userdata.password,
-   //  })
+     
         
       })
    }
