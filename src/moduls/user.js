@@ -35,3 +35,14 @@ exports.chikingUser=(userdata,Callback)=>{
     })
   
  }
+//  chicking email and password
+exports.chikingUserData=(userdata,Callback)=>{
+    db.query(`SELECT * FROM user where email ="${userdata.email}"  ;`,(error,result)=>{
+        if(error){
+            console.log("error:", error)
+            Callback(error,null)
+        }
+        console.log(result)
+        Callback(null,result)
+    })
+}

@@ -2,7 +2,9 @@ const { request, response } = require("express")
 const bcrypt =require("bcrypt")
 const userModel=require("../moduls/user")
 const body_parser =require("body-parser")
-
+const jwt = require('jsonwebtoken');
+const SECRET = "motSecret";
+const MAXAGE = Math.floor(Date.now() / 1000) + (60 * 60);
 // function pour ajouter user
 exports.newUser=(request,response)=>{
    const {
@@ -74,21 +76,74 @@ exports.newUser=(request,response)=>{
 
 
 // login
-// exports.authenticate=(request,response)=>{
-   // const userdata= { email,password } = request.body;
-   // userModel.chikingUser(userdata).then(result=>{
+exports.findUser=(request,response)=>{
+   const userdata= { email,password } = request.body;
+   userModel.chikingUserData(userdata,(error,result)=>{
+      if(result.length===0){
+         response.status(401).json({
+            message:"email n'exist pas"
+         })
+      }
+      else {
+         const hash = result[0].password;
+   
+         bcrypt.compare(password, hash, (error, correct) => {
+         
+           if (!correct) {
+              response.status(401).json({
+                 message:"votre mot de pass n'est pas correct"
+              })
+           }
+     
+           const user = {
+             id: result[0].id,
+             email: result[0].email,
+             password:result[0].password,
+             first_name:result[0].first_name,
+             last_name:result[0].last_name,
+             role:result[0].role,
+             exp: MAXAGE
+           };
+     
+           jwt.sign(user, SECRET, (error, token) => {
+             if (error) {
+              response.status(500).json({
+                 message:error
+              })
+             }
+     
+             request.user = {
+               id: result[0].id,
+               email: result[0].email,
+               password:result[0].password,
+               first_name:result[0].first_name,
+               last_name:result[0].last_name,
+               role:result[0].role,
+             };
+             
+              response.cookie('authcookie', token, { maxAge: MAXAGE });
+             response.status(200).json({
+                token:token,
+                user:{
+                  role:request.user.role,
+                  first_name:request.user.first_name,
+                  last_name:request.user.last_name,
+                  email:request.user.email
+                }
+             })
+             console.log("new infrmation",request.user.username)
+             return  request.user 
+           });
+         });
+       }
       // response.status(201).jason({
          // message:"login successfule",
-         // email:result.email,
-         // password:result.password,
-      // })
-         // }).catch(error=>{
-            // response.status(500).jason({
-               // message:error
-            // })
-         // })
-      // }
-
+         // email:userdata.email,
+      //  password:userdata.password,
+   //  })
+        
+      })
+   }
 
 
     
