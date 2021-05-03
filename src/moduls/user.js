@@ -1,16 +1,5 @@
 const db = require ("../config/database")
-// function for select all userName that match with the userName entried in siginUp
-exports.emailExiste=(email,Callback)=>{
-    db.query(`SELECT email FROM user where user.email = "${email}" `,(error,result)=>{
-        if(error){
-            console.log("error:", error)
-            Callback(error,null)
-            return;
-        }
-        Callback(null,result)
-    })
-  
-}
+
 exports.AddUser = (newUser, Callback) => {
     db.query(`INSERT INTO user (email,password,first_name,last_name,role) VALUES
      ("${newUser.email}","${newUser.password}","${newUser.first_name}","${newUser.last_name}","${newUser.role}");`, (error, result) => {
