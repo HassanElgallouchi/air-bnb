@@ -1,6 +1,6 @@
 const { request, response } = require("express")
 const bcrypt =require("bcrypt")
-const userModel=require("../moduls/user")
+const userModel=require("../models/user")
 const body_parser =require("body-parser")
 const jwt = require('jsonwebtoken');
 const SECRET = "motSecret";
@@ -50,6 +50,7 @@ exports.newUser=(request,response)=>{
              }
          //   creat new user
             userModel.AddUser(newUser,(error,result)=>{
+               
                if(error){
                   response.status(500).json({
                      message:error

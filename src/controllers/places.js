@@ -36,14 +36,19 @@ exports.findById= (request, response) => {
 
 /////////////3333/ pour ajouter une place
 exports.addOnePlace = (request, response) => {
-  //console.log(addOnePlace)
+  console.log(addOnePlace)
   Place.createPlace(request.query, (error, result) => {
       if (error) {
-          response.send(error.message);
+        response.status(500).json({
+          message: 'there is probleme on your server.'
+        });
       }
 
-      response.redirect("/");
+      response.status(200).json({
+        message:"user add successfule"
+        });
   })
+  
 }
 /////44444/////
 exports.delete= (request, response) => {

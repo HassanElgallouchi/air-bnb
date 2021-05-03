@@ -13,7 +13,7 @@ exports.getAllPlace = ( callback) => {
 }
 ////////22222///
 exports.getOneById = (id, callback) => {
-  db.query(`SELECT * FROM place WHERE id = ${id};`, (error, result) => {
+  db.query(`SELECT * FROM place INNER JOIN user WHERE id = ${id};`, (error, result) => {
     if (error) {
     console.log("error: ", error);
 
@@ -30,7 +30,7 @@ exports.getOneById = (id, callback) => {
 // ////////////333333///////////////////////// ok ok ok pour ajouter une plac
 
 exports.createPlace = (place, callback) => {
-    console.log(place);
+    //console.log(place);
   db.query(`INSERT INTO place  (name, description, rooms, bathroom, max_gursts, price_by_night, available) 
   VALUES ("${place.name}", "${place.description}", "${place.rooms}", "${place.bathroom}", 
   "${place.max_gursts}", "${place.price_by_night}", "${place.available}");`, (error, result) => {
