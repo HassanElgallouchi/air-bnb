@@ -16,7 +16,7 @@ exports.findPlaces= (request, response) => {
  //console.log(name); // pour voir tout les place 
   });
 }
-//////////////////////
+////////////////////// j'ai besoin un user id ou city id 
 exports.findById= (request, response) => {
   const{ place} = request.params;
   const{ id} = request.params;
@@ -36,6 +36,7 @@ exports.findById= (request, response) => {
 
 /////////////3333/ pour ajouter une place
 exports.addOnePlace = (request, response) => {
+  //console.log(addOnePlace)
   Place.createPlace(request.query, (error, result) => {
       if (error) {
           response.send(error.message);
