@@ -1,6 +1,8 @@
 const express = require('express');
 const morgan = require('morgan')
-const router = require('./routes/places');
+const routerPlace = require('./routes/places');
+const router= require("./routes/users")
+
 
 
 //           /!\
@@ -9,10 +11,11 @@ const server = express();
 server.use(morgan('dev'));
  
 server.use(express.urlencoded({extended: false}));
+server.use(routerPlace);
 server.use(router);
 
 
 
-server.listen(process.env.PORT, () => {
+server.listen(8000, () => {
     console.log('Connexion !');
 })
