@@ -140,6 +140,3 @@ exports.findUser=(request,response)=>{
         
       })
    }
-
-
-    
