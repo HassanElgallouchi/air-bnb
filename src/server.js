@@ -1,15 +1,17 @@
 const express = require('express');
 const server = express();
+const morgan = require("./routes/city")
 
-//           /!\
-// require("dotenv").config();
+server.use (morgan('dev'));
+
+ //require("dotenv").config();//
 
 server.use(express.urlencoded({extended: false}));
 
 
 // server.use(router);
 
-
-server.listen(process.env.PORT, () => {
+const port = 8000
+server.listen(port, () => {
     console.log('Connexion !');
 })
