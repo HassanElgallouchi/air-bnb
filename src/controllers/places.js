@@ -9,28 +9,29 @@ exports.findPlaces= (request, response) => {
       response.status(500).json({
         message: 'le servre founuction plus.'
       });
-    }else 
+    }else { 
     response.status(200).json({
      name
     });
- //console.log(name); // pour voir tout les place 
+   }
+    //console.log(name); // pour voir tout les place 
   });
 }
 ////////////////////// j'ai besoin un user id ou city id 
 exports.findById= (request, response) => {
-  const{ place} = request.params;
+  //const{ place} = request.params;
   const{ id} = request.params;
-  Place.getOneById(id, ( error, name) => {
+  console.log(id)
+  Place.getOneById(id, ( error, result) => {
     if (error) {
       response.status(500).json({
-        message: 'there is probleme on your server.'
+        message: 'there is probleme on your server  you can not git with one place with un ID.'
       });
     }else 
     response.status(200).json({
-     
-     name
+     result
     });
-    console.log(name);
+    console.log(result);
   });
 }
 
@@ -54,14 +55,14 @@ exports.addOnePlace = (request, response) => {
 exports.delete= (request, response) => {
   //const{ place} = request.params;
   const{ id} = request.params;
-  Place.deletePlace(id, ( error, name) => {
+  Place.deletePlace(id, ( error) => {
     if (error) {
       response.status(500).json({
         message: 'there is probleme on your server.'
       });
     }else 
     response.status(200).json({
-    name
+    message: "you have delete one place"
     });
     //console.log(name);
   });

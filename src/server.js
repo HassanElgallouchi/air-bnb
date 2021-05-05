@@ -1,5 +1,10 @@
 const express = require('express');
 const morgan = require('morgan')
+const cors = require('cors')
+
+const server = express();
+ 
+server.use(cors())
 
 const router = require("../src/routes/index");
 
@@ -7,7 +12,6 @@ const router = require("../src/routes/index");
 
 //           /!\
 require("dotenv").config();
-const server = express();
 server.use(morgan('dev'));
 server.use(express.urlencoded({extended: false}));
 

@@ -2,7 +2,7 @@
 //1111/// pour aficher tout les place  ok
 
 exports.getAllPlace = ( callback) => {
-  db.query(`SELECT * FROM place ;`, (error, result) => {
+  db.query(`SELECT *,city.name as nameCity FROM city Right JOIN place ON place.city_id = city.id ORDER BY place.id DESC;`, (error, result) => {
     if (error) {
     console.log("error: ", error);
       callback(error, null);
@@ -13,7 +13,8 @@ exports.getAllPlace = ( callback) => {
 }
 ////////22222///
 exports.getOneById = (id, callback) => {
-  db.query(`SELECT * FROM place INNER JOIN user WHERE id = ${id};`, (error, result) => {
+  //console.log(id)
+  db.query(`SELECT * FROM place WHERE place.id= ${id};`, (error, result) => {
     if (error) {
     console.log("error: ", error);
 
@@ -21,7 +22,7 @@ exports.getOneById = (id, callback) => {
       return;
     }
 
-    callback(error, null);
+    callback(null, result);
   })
 }
 
