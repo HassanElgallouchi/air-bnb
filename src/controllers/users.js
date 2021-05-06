@@ -82,6 +82,7 @@ exports.findUser=(request,response)=>{
       if(result.length===0){
          response.status(401).json({
             message:"email n'exist pas"
+            
          })
       }
       else {
@@ -98,7 +99,6 @@ exports.findUser=(request,response)=>{
            const user = {
              id: result[0].id,
              email: result[0].email,
-             password:result[0].password,
              first_name:result[0].first_name,
              last_name:result[0].last_name,
              role:result[0].role,
@@ -115,7 +115,6 @@ exports.findUser=(request,response)=>{
              request.user = {
                id: result[0].id,
                email: result[0].email,
-               password:result[0].password,
                first_name:result[0].first_name,
                last_name:result[0].last_name,
                role:result[0].role,
