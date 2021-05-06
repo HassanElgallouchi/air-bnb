@@ -8,7 +8,7 @@ const cors =require("cors")
 require("dotenv").config();
 const server = express();
 server.use(morgan('dev'));
- 
+server.use(express.json());
 server.use(express.urlencoded({extended: false}));
 server.use(cors())
 server.use(router);
