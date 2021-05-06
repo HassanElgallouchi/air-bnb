@@ -3,7 +3,7 @@ const { response, request } = require("express");
 const Place = require("../moduls/place");
 //111111 pour afficher tout les place ok
 exports.findPlaces= (request, response) => {
-  const { place} = request.params;
+  
   Place.getAllPlace(( error, name) => {
     if (error) {
       response.status(500).json({
@@ -16,11 +16,11 @@ exports.findPlaces= (request, response) => {
  //console.log(name); // pour voir tout les place 
   });
 }
-////////////////////// j'ai besoin un user id ou city id 
+////////////////////// j'ai besoin un user id ou city id s
 exports.findById= (request, response) => {
-  const{ place} = request.params;
-  const{ id} = request.params;
-  Place.getOneById(id, ( error, name) => {
+  const {id} = request.params;
+  console.log(id)
+  Place.getOneById(id, ( error, result) => {
     if (error) {
       response.status(500).json({
         message: 'there is probleme on your server.'
@@ -28,9 +28,9 @@ exports.findById= (request, response) => {
     }else 
     response.status(200).json({
      
-     name
+     result
     });
-    console.log(name);
+    console.log(result);
   });
 }
 

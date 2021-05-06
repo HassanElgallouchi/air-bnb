@@ -1,6 +1,6 @@
 const express = require('express');
 //const routerPlace = require('routes');
-
+const isAuth = require("../middlewares/isAuth")
 const routerPlace = express.Router();
 
 const placeController = require("../controllers/places");
